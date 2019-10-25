@@ -57,7 +57,7 @@ Innosilicon - default (ssh/telnet) user:**root**  default password:**blacksheepw
 
 Login with SSH to your miner and run the following command
 ``` sh
-cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/bin/selfupgrade && sh selfupgrade
+cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/bin/selfupgrade && sh selfupgrade
 ```
 For Antminer D3 **Blissz**, before installation run:
 ```
@@ -72,11 +72,11 @@ Force setup FARM_HASH or RIG ID and password, change api url:
 ## Promptless installation
 You can use FARM_HASH to add ASIC automatically without entering rig id and password. Get your hash and put it on the commandline. (FARM_HASH=$FARM_HASH)
 ``` sh
-cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/bin/selfupgrade && FARM_HASH=your_hash_from_web sh selfupgrade
+cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/bin/selfupgrade && FARM_HASH=your_hash_from_web sh selfupgrade
 ```
 Change api server. (HIVE_HOST_URL=$HIVE_HOST_URL)
 ``` sh
-cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/bin/selfupgrade && FARM_HASH=your_hash_from_web HIVE_HOST_URL=http://api.exaple.com sh selfupgrade
+cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/bin/selfupgrade && FARM_HASH=your_hash_from_web HIVE_HOST_URL=http://api.exaple.com sh selfupgrade
 ```
 
 
@@ -85,7 +85,7 @@ You can install Hive on all the ASICs you have on your local network. Or you can
 For this you need to have running Linux computer (maybe Hive OS on GPU rig) or Antminer ASIC with hive client, download files with this command 
 ```sh
 apt-get install -y sshpass curl
-cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/hive-asic-net-installer/download.sh && sh download.sh
+cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/hive-asic-net-installer/download.sh && sh download.sh
 cd /tmp/hive-bulk-install
 ```
 Edit `config.txt` to set your FARM_HASH or firmware URL, edit `ips.txt` to set IPs list of your new ASICs.
@@ -105,7 +105,7 @@ Manual: https://forum.hiveos.farm/t/innosilicon-t2t-t3-series/13610
 
 If you want to install specific version or downgrade please append version as an argument to selfupgrade. E.g. 0.1-02
 ``` sh
-cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/bin/selfupgrade && sh selfupgrade 0.1-02
+cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/bin/selfupgrade && sh selfupgrade 0.1-02
 ```
 
 Locally on ASIC you can run ```selfupgrade``` command. 
@@ -148,11 +148,11 @@ hello hostname
 [Zig Z1+ ssh manual](hive/share/zig/README.md)
 
 ``` sh
-cd /tmp && wget https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/bin/selfupgrade && bash selfupgrade
+cd /tmp && wget https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/bin/selfupgrade && bash selfupgrade
 ```
 or
 ``` sh
-cd /tmp && wget https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/bin/selfupgrade && FARM_HASH=your_hash_from_web bash selfupgrade
+cd /tmp && wget https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/bin/selfupgrade && FARM_HASH=your_hash_from_web bash selfupgrade
 ```
 
 ## Antminer S9 signed (deprecated)
