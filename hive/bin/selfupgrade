@@ -9,9 +9,9 @@
 echo $ASIC_MODEL
 
 if [ "$ASIC_MODEL" == "Zig Z1+" ] || [ "$ASIC_MODEL" == "Zig Z1" ]; then
-	release=`wget -q -O- https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/etc/VERSION`
+	release=`wget -q -O- https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/etc/VERSION`
 else
-	release=`curl -f --silent -L --insecure https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/etc/VERSION`
+	release=`curl -f --silent -L --insecure https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/etc/VERSION`
 fi
 
 exitcode=$?
