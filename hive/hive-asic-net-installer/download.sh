@@ -9,14 +9,14 @@ fi
 
 mkdir -p /tmp/hive-bulk-install
 cd /tmp/hive-bulk-install
-curl -L --insecure -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/hive-asic-net-installer/config.txt
-curl -L --insecure -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/hive-asic-net-installer/ips.txt
-curl -L --insecure -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/hive-asic-net-installer/install.sh
-curl -L --insecure -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/hive-asic-net-installer/ipscan.sh
-curl -L --insecure -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/hive-asic-net-installer/firmware.sh
-curl -L --insecure -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/hive-asic-net-installer/setup.sh
-curl -L --insecure -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/hive-asic-net-installer/firmware-upgrade
-curl -L --insecure -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/hive-asic-net-installer/ipscan_model.sh
+curl -L --insecure -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/hive-asic-net-installer/config.txt
+curl -L --insecure -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/hive-asic-net-installer/ips.txt
+curl -L --insecure -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/hive-asic-net-installer/install.sh
+curl -L --insecure -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/hive-asic-net-installer/ipscan.sh
+curl -L --insecure -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/hive-asic-net-installer/firmware.sh
+curl -L --insecure -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/hive-asic-net-installer/setup.sh
+curl -L --insecure -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/hive-asic-net-installer/firmware-upgrade
+curl -L --insecure -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/hive-asic-net-installer/ipscan_model.sh
 chmod +x install.sh
 chmod +x ipscan.sh
 chmod +x firmware.sh
