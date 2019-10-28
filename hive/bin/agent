@@ -39,15 +39,15 @@ miner_stats () {
 	max_fan_rpm=$MAX_FAN_RPM
 	case $ASIC_MODEL in
 		"Antminer S9"|"Antminer T9+"*|"Antminer S9i"|"Antminer E3"|"Antminer S9 Hydro"|"Antminer S9 (vnish"*|"Antminer S9"*|"Antminer "|"Antminer T9"*|"Antminer T17"|"Antminer S17"*|"Antminer T15"|"Antminer S15"|"Antminer S9j"|"Antminer S11"|"Minecenter S9")
-			stats_raw=`echo '{"command":"stats"}' | timeout -t 7 nc localhost 4028 | tr -d '\0\n'`
+			stats_raw=`echo '{"command":"stats"}' | timeout -t 7 nc localhost 4029 | tr -d '\0\n'`
 			if [[ $? -ne 0 || -z $stats_raw ]]; then
-				echo -e "${YELLOW}Failed to read $miner stats from localhost:4028${NOCOLOR}"
+				echo -e "${YELLOW}Failed to read $miner stats from localhost:4029${NOCOLOR}"
 			else
 				stats_raw=$(sed 's/}{/\},{/' <<< "$stats_raw")
 				local STATS=$(jq '.STATS' <<< "$stats_raw")
 
 				#if [[ -z $algo || $algo == "null" ]]; then
-				#	algo=`echo '{"command":"coin"}' | nc -w $API_TIMEOUT localhost 4028 | jq '.COIN."Hash Method"'`
+				#	algo=`echo '{"command":"coin"}' | nc -w $API_TIMEOUT localhost 4029 | jq '.COIN."Hash Method"'`
 				#fi
 
 				local algo=$ASIC_ALGO
@@ -63,7 +63,7 @@ miner_stats () {
 				else
 					khs=$(awk '{print $1 * 1000000}' <<< "$khs")
 				fi
-				local stats_pool=`echo '{"command":"pools"}' | timeout -t 7 nc localhost 4028 | tr -d '\0' | jq '.POOLS'`
+				local stats_pool=`echo '{"command":"pools"}' | timeout -t 7 nc localhost 4029 | tr -d '\0' | jq '.POOLS'`
 				local active_pool=$(echo $stats_pool | jq '[. as $object | keys[] | select($object[.]."Stratum Active" == true  and $object[.]."Priority" <= 3) as $pool | select($object[$pool]."Getworks")] | .[0]')
 
 
@@ -90,15 +90,15 @@ miner_stats () {
 			fi
 		;;
 		"Antminer A3"|"Antminer D3"|"Antminer L3+"*|"Antminer D3 Blissz"*|"Antminer L3++"|"Antminer Z9"*|"Antminer Z11"*|"Antminer X3"|"Antminer S7"|"Antminer DR3")
-			stats_raw=`echo '{"command":"stats"}' | timeout -t 7 nc localhost 4028 | tr -d '\0'`
+			stats_raw=`echo '{"command":"stats"}' | timeout -t 7 nc localhost 4029 | tr -d '\0'`
 			if [[ $? -ne 0 || -z $stats_raw ]]; then
-				echo -e "${YELLOW}Failed to read $miner stats from localhost:4028${NOCOLOR}"
+				echo -e "${YELLOW}Failed to read $miner stats from localhost:4029${NOCOLOR}"
 			else
 				stats_raw=$(sed 's/}{/\},{/' <<< "$stats_raw")
 				local STATS=$(jq '.STATS' <<< "$stats_raw")
 
 				#if [[ -z $algo || $algo == "null" ]]; then
-				#	algo=`echo '{"command":"coin"}' | nc localhost 4028 | jq '.COIN."Hash Method"'`
+				#	algo=`echo '{"command":"coin"}' | nc localhost 4029 | jq '.COIN."Hash Method"'`
 				#fi
 
 				local algo=$ASIC_ALGO
