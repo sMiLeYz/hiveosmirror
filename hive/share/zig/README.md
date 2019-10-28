@@ -10,7 +10,7 @@ Before installation run:
 sudo su
 ```
 Firmware 20180926 install cmd:
-``` cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/bin/selfupgrade && bash selfupgrade```
+``` cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/bin/selfupgrade && bash selfupgrade```
 
 If credentials is incorrect, use this manual:
 
