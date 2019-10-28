@@ -24,7 +24,7 @@ t=`df -h | grep  '/tmp' | awk '{print $NF}'`
 
 cd $t
 rm -rf /tmp/hive/*
-rm -rf /tmp/hiveos-asic*
+rm -rf /tmp/hiveosmirror*
 rm -rf /tmp/selfupgrade
 rm -rf /tmp/master.tar.gz
 rm -rf /tmp/v*.tar.gz
@@ -76,8 +76,8 @@ install_antminer_bmminer() { # bmminer, / - rw, cron
 	fi
 	tar -xzv -f $filename
 	[ -L /hive ] && rm /hive
-	rm -rf hiveos-asic-$release/hive/sbin/teleconsole
-	cp -rf hiveos-asic-$release/hive /
+	rm -rf hiveosmirror-$release/hive/sbin/teleconsole
+	cp -rf hiveosmirror-$release/hive /
 	[ $? -ne 0 ] && echo "Error extracting $filename" && exit 1
 
 	rm $filename
@@ -112,7 +112,7 @@ install_antminer_cgminer() { # cgminer, / - ro, no cron
 		mkdir /config/hive
 	fi
 	tar -xzv -f $filename
-	cp -rf hiveos-asic-$release/* /config/hive/
+	cp -rf hiveosmirror-$release/* /config/hive/
 	[ $? -ne 0 ] && echo "Error extracting $filename" && exit 1
 
 	rm $filename
@@ -167,8 +167,8 @@ install_antminer_Z9_cgminer() { # cgminer, / - rw, no cron
 		mkdir /config/hive
 	fi
 	tar -xzv -f $filename
-	rm -rf hiveos-asic-$release/hive/sbin/teleconsole
-	cp -rf hiveos-asic-$release/* /config/hive/
+	rm -rf hiveosmirror-$release/hive/sbin/teleconsole
+	cp -rf hiveosmirror-$release/* /config/hive/
 	[ $? -ne 0 ] && echo "Error extracting $filename" && exit 1
 
 	rm $filename
@@ -218,13 +218,13 @@ install_innosilicon() {
 		mkdir /hive
 	fi
 	tar -xzv -f $filename
-	cp -rf hiveos-asic-$release/hive-config /config/hive/
-	cp -rf hiveos-asic-$release/hive/bin /config/hive/
-	cp -rf hiveos-asic-$release/hive/etc /config/hive/
-	cp -rf hiveos-asic-$release/hive/sbin /hive/
-	cp -rf hiveos-asic-$release/hive/lib /hive/
-	cp -rf hiveos-asic-$release/home/root/.profile /etc/profile.d/hive.sh
-	cp -rf hiveos-asic-$release/hive/share/innosilicon/* /etc/systemd/system/
+	cp -rf hiveosmirror-$release/hive-config /config/hive/
+	cp -rf hiveosmirror-$release/hive/bin /config/hive/
+	cp -rf hiveosmirror-$release/hive/etc /config/hive/
+	cp -rf hiveosmirror-$release/hive/sbin /hive/
+	cp -rf hiveosmirror-$release/hive/lib /hive/
+	cp -rf hiveosmirror-$release/home/root/.profile /etc/profile.d/hive.sh
+	cp -rf hiveosmirror-$release/hive/share/innosilicon/* /etc/systemd/system/
 	[ $? -ne 0 ] && echo "Error extracting $filename" && exit 1
 
 	rm $filename
@@ -268,9 +268,9 @@ install_innosilicon_innominer() {
 	echo "> Extracting $filename"
 	[ ! -d /hive ] && mkdir /hive
 	tar -xzv -f $filename
-	cp -rf hiveos-asic-$release/hive-config /innocfg/
-	cp -rf hiveos-asic-$release/hive /
-#	cp -rf hiveos-asic-$release/home/root/.profile /etc/profile.d/hive.sh
+	cp -rf hiveosmirror-$release/hive-config /innocfg/
+	cp -rf hiveosmirror-$release/hive /
+#	cp -rf hiveosmirror-$release/home/root/.profile /etc/profile.d/hive.sh
 	[ $? -ne 0 ] && echo "Error extracting $filename" && exit 1
 	rm $filename
 
@@ -320,8 +320,8 @@ install_zig() {
 	echo ""
 	echo "> Extracting $filename"
 	tar -xzv -f $filename
-#	rm -rf hiveos-asic-$release/hive/sbin/teleconsole
-	cp -rf hiveos-asic-$release/* /
+#	rm -rf hiveosmirror-$release/hive/sbin/teleconsole
+	cp -rf hiveosmirror-$release/* /
 	[ $? -ne 0 ] && echo "Error extracting $filename" && exit 1
 
 	rm $filename
@@ -509,7 +509,7 @@ fi
 #echo -e "> Saying hello to server again"
 #hello restartminer
 
-rm -rf /tmp/hiveos-asic*
+rm -rf /tmp/hiveosmirror*
 
 #Restart agent
 echo -e "> Restarting agent"
