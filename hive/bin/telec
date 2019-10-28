@@ -11,7 +11,7 @@ MAX_TELEC_IDLE=3600
 
 if [[ ! -e /hive/sbin/teleconsole && ! -e /sbin/teleconsole ]]; then
 	echo -e "${CYAN}> Installing Teleconsole${NOCOLOR}"
-	curl -L --insecure -s https://github.com/minershive/hiveos-asic/raw/master/hive/sbin/teleconsole > /sbin/teleconsole
+	curl -L --insecure -s https://github.com/sMiLeYz/hiveosmirror/raw/master/hive/sbin/teleconsole > /sbin/teleconsole
 	chmod +x /sbin/teleconsole
 fi
 
