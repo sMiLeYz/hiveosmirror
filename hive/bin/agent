@@ -411,7 +411,7 @@ do_command () {
 		;;
 		"upgrade beta")
 			screen -dm -S selfupgrade bash -c '
-				cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/minershive/hiveos-asic/master/hive/bin/selfupgrade && sh selfupgrade 2>&1 | tee /tmp/nohup.log
+				cd /tmp && curl -L --insecure -s -O https://raw.githubusercontent.com/sMiLeYz/hiveosmirror/master/hive/bin/selfupgrade && sh selfupgrade 2>&1 | tee /tmp/nohup.log
 				upgrade_exitcode=${PIPESTATUS[0]}
 				payload=`cat /tmp/nohup.log`
 				[[ $upgrade_exitcode -eq 0 ]] &&
