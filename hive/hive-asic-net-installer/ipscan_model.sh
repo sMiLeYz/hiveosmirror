@@ -16,7 +16,7 @@ echo > ./$1.txt
 for ip in $IPS; do
     echo
     echo -e "> Processing ${CYAN}$ip${NOCOLOR}"
-    model=`echo '{"command":"stats"}' | timeout 7 nc $ip 4028 | tr -d '\0\n' | sed 's/}{/\},{/' | jq -r .STATS[0].Type`
+    model=`echo '{"command":"stats"}' | timeout 7 nc $ip 4029 | tr -d '\0\n' | sed 's/}{/\},{/' | jq -r .STATS[0].Type`
     echo "$ip $model"
         if [[ $model == "Antminer $1" ]]; then
             echo "$ip $model ADD"
