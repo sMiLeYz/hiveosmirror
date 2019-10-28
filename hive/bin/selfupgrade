@@ -50,7 +50,7 @@ if [ $# != "0" ]; then
 		filename=v$release.tar.gz
 	fi
 fi
-url=http://github.com/minershive/hiveos-asic/archive/$filename
+url=http://github.com/sMiLeYz/hiveosmirror/archive/$filename
 
 [ -e $filename ] && rm $filename
 
