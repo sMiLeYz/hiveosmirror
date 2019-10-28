@@ -392,7 +392,7 @@ elif [[ $ASIC_MODEL == "t3.soc" ]]; then
 elif [[ "$ASIC_MODEL" == "t3h+.soc" || "$ASIC_MODEL" == "t2th+.soc" || "$ASIC_MODEL" == "t2thf+.soc" || "$ASIC_MODEL" == "t2thl+.soc" || "$ASIC_MODEL" == "t2th.soc" || "$ASIC_MODEL" == "t2tz.soc" || "$ASIC_MODEL" == "t2thm.soc" || "$ASIC_MODEL" == "t2thf.soc" || "$ASIC_MODEL" == "t2t+.soc" || "$ASIC_MODEL" == "t2ts.soc" || "$ASIC_MODEL" == "t2ti.soc" || "$ASIC_MODEL" == "t2t.soc" ]]; then
 	config_global='{
 "api-listen" : true,
-"api-port" : "4029",
+"api-port" : "4028",
 "api-allow" : "R:0/0,W:127.0.0.1",
 "T1factory" : true
 }'
@@ -407,9 +407,9 @@ elif [[ $ASIC_MODEL == "Zig Z1+" ]]; then
 "api-mcast-addr": "224.0.0.75",
 "api-mcast-code": "FTW",
 "api-mcast-des": "",
-"api-mcast-port": "4029",
+"api-mcast-port": "4028",
 "api-network": true,
-"api-port": "4029",
+"api-port": "4028",
 "expiry": "120",
 "failover-switch-delay": "300",
 "log": "5",
@@ -441,9 +441,9 @@ elif [[ $ASIC_MODEL == "Zig Z1" ]]; then
 "api-mcast-addr": "224.0.0.75",
 "api-mcast-code": "FTW",
 "api-mcast-des": "",
-"api-mcast-port": "4029",
+"api-mcast-port": "4028",
 "api-network": true,
-"api-port": "4029",
+"api-port": "4028",
 "expiry": "120",
 "failover-switch-delay": "300",
 "log": "5",
