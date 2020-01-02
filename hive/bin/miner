@@ -54,6 +54,10 @@ function config-gen() {
 
 function start() {
 	echo -e "Starting ${CYAN}$THIS_MINER_NAME${NOCOLOR}"
+	if [[ $HIVEON_VER == "1.02" ]]; then
+		config-gen
+		rm -f /tmp/norespawn
+	else
 	for i in {1..15}; do
 		test_miner="$(ps | grep -e bmminer -e cgminer -e single-board-test | grep -v 'grep' | grep -v 'systemctl')"
 		if [ -z "$test_miner" ] ; then
@@ -61,7 +65,7 @@ function start() {
 			screen -d > /dev/null
 			if [[ $ASIC_MODEL =~ ".g19" || $ASIC_MODEL == "1337.PWNED" || $ASIC_MODEL == "t3.soc" ]]; then
 				systemctl start cgminer.service
-			elif [[ "$ASIC_MODEL" == "t3h+.soc" || "$ASIC_MODEL" == "t2th+.soc" || "$ASIC_MODEL" == "t2thf+.soc" || "$ASIC_MODEL" == "t2thl+.soc" || "$ASIC_MODEL" == "t2th.soc" || "$ASIC_MODEL" == "t2tz.soc" || "$ASIC_MODEL" == "t2thm.soc" || "$ASIC_MODEL" == "t2thf.soc" || "$ASIC_MODEL" == "t2t+.soc" || "$ASIC_MODEL" == "t2ts.soc" || "$ASIC_MODEL" == "t2ti.soc" || "$ASIC_MODEL" == "t2t.soc" ]]; then
+			elif [[ "$ASIC_MODEL" == "t3h+.soc" || "$ASIC_MODEL" == "t3+.soc" || "$ASIC_MODEL" == "t2th+.soc" || "$ASIC_MODEL" == "t2thf+.soc" || "$ASIC_MODEL" == "t2thl+.soc" || "$ASIC_MODEL" == "t2th.soc" || "$ASIC_MODEL" == "t2tz.soc" || "$ASIC_MODEL" == "t2thm.soc" || "$ASIC_MODEL" == "t2thf.soc" || "$ASIC_MODEL" == "t2t+.soc" || "$ASIC_MODEL" == "t2ts.soc" || "$ASIC_MODEL" == "t2ti.soc" || "$ASIC_MODEL" == "t2t.soc" ]]; then
 				systemctl start cgminer.service
 #				timeout -t 600 /hive/bin/inno_api updatePools
 				timeout -t 600 /hive/bin/inno_api updateFanspeed
@@ -77,23 +81,38 @@ function start() {
 		fi
 		sleep 1
 	done
+	fi
 	echo "";
 }
 
-
 function stop() {
 	echo -e "Stopping ${CYAN}$MINER${NOCOLOR}"
-	if [[ $ASIC_MODEL =~ ".g19" || $ASIC_MODEL == "1337.PWNED" || $ASIC_MODEL == "t3.soc" || "$ASIC_MODEL" == "t3h+.soc" || "$ASIC_MODEL" == "t2th+.soc" || "$ASIC_MODEL" == "t2thf+.soc" || "$ASIC_MODEL" == "t2thl+.soc" || "$ASIC_MODEL" == "t2th.soc" || "$ASIC_MODEL" == "t2tz.soc" || "$ASIC_MODEL" == "t2thm.soc" || "$ASIC_MODEL" == "t2thf.soc" || "$ASIC_MODEL" == "t2t+.soc" || "$ASIC_MODEL" == "t2ts.soc" || "$ASIC_MODEL" == "t2ti.soc" || "$ASIC_MODEL" == "t2t.soc" ]]; then
-		systemctl stop cgminer.service
-	elif [[ $ASIC_MODEL =~ "Zig Z1" ]]; then
-		pidof miner | xargs kill -9
-	elif [[ $ASIC_MODEL == "T4.G19" ]]; then
-		killall innominer_T4
+	if [[ $HIVEON_VER == "1.02" ]]; then
+		echo "ok" > /tmp/norespawn
 	else
-		/etc/init.d/$THIS_MINER_NAME.sh stop
+		if [[ $ASIC_MODEL =~ ".g19" || $ASIC_MODEL == "1337.PWNED" || $ASIC_MODEL == "t3.soc" || "$ASIC_MODEL" == "t3h+.soc" || "$ASIC_MODEL" == "t3+.soc" || "$ASIC_MODEL" == "t2th+.soc" || "$ASIC_MODEL" == "t2thf+.soc" || "$ASIC_MODEL" == "t2thl+.soc" || "$ASIC_MODEL" == "t2th.soc" || "$ASIC_MODEL" == "t2tz.soc" || "$ASIC_MODEL" == "t2thm.soc" || "$ASIC_MODEL" == "t2thf.soc" || "$ASIC_MODEL" == "t2t+.soc" || "$ASIC_MODEL" == "t2ts.soc" || "$ASIC_MODEL" == "t2ti.soc" || "$ASIC_MODEL" == "t2t.soc" ]]; then
+			systemctl stop cgminer.service
+		elif [[ $ASIC_MODEL =~ "Zig Z1" ]]; then
+			pidof miner | xargs kill -9
+		elif [[ $ASIC_MODEL == "T4.G19" ]]; then
+			killall innominer_T4
+		else
+			/etc/init.d/$THIS_MINER_NAME.sh stop
+		fi
 	fi
 }
 
+function restart() {
+	echo -e "${YELLOW}Restarting miner${NOCOLOR}" #can be different on miner change
+	if [[ $HIVEON_VER == "1.02" ]]; then
+		config-gen
+		rm -f /tmp/norespawn
+		echo "ok" > /config/restart
+	else
+		stop
+		start
+	fi
+}
 
 function miner_log_basename() {
 	local miner=$1
@@ -114,34 +133,38 @@ function miner_log_basename() {
 function log_tail() {
 	local TAIL_LINE=80
 
-	log_basename=`miner_log_basename $MINER`
-	if [[ $ASIC_MODEL =~ ".g19" ]]; then
-		journalctl -n $TAIL_LINE
+	if [[ $HIVEON_VER == "1.02" ]]; then
+		sh /www/pages/cgi-bin/get_kernel_log.cgi | tail -n $TAIL_LINE
 	else
-		if [[ $? > 0 ]]; then
-			echo $log_basename #show error message
-			return
+		log_basename=`miner_log_basename $MINER`
+		if [[ $ASIC_MODEL =~ ".g19" || $ASIC_MODEL == "1337.PWNED" ]]; then
+			journalctl -n $TAIL_LINE
+		else
+			if [[ $? > 0 ]]; then
+				echo $log_basename #show error message
+				return
+			fi
+
+			#logname="${log_basename}.log"
+			logname="${log_basename}"
+
+			if [[ ! -e $logname ]]; then
+				echo "Log $logname does not exist yet"
+				return
+			fi
+
+			if [[ `ls -l $logname | awk '{print $5}'` -le 1 ]]; then #can be 1, empty line
+				echo "Log $logname is empty"
+				return
+			fi
+
+
+			echo -e "${YELLOW}=== $logname last $TAIL_LINE lines =================================================${NOCOLOR}"
+			echo "Last modified `stat -c %y $logname`"
+			echo ""
+			#tail -n $TAIL_LINE $logname | sed "s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g" #sed removes colors
+			tail -n $TAIL_LINE $1 $logname
 		fi
-
-		#logname="${log_basename}.log"
-		logname="${log_basename}"
-
-		if [[ ! -e $logname ]]; then
-			echo "Log $logname does not exist yet"
-			return
-		fi
-
-		if [[ `ls -l $logname | awk '{print $5}'` -le 1 ]]; then #can be 1, empty line
-			echo "Log $logname is empty"
-			return
-		fi
-
-
-		echo -e "${YELLOW}=== $logname last $TAIL_LINE lines =================================================${NOCOLOR}"
-		echo "Last modified `stat -c %y $logname`"
-		echo ""
-		#tail -n $TAIL_LINE $logname | sed "s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g" #sed removes colors
-		tail -n $TAIL_LINE $1 $logname
 	fi
 }
 
@@ -187,12 +210,7 @@ case $1 in
 		stop
 	;;
 	restart)
-#		echo -e "Restarting ${CYAN}$MINER${NOCOLOR}"
-		echo -e "${YELLOW}Restarting miner${NOCOLOR}" #can be different on miner change
-		stop
-		#need some time to finish it seems
-		#sleep 5
-		start
+		restart
 	;;
 	config)
 		config
@@ -202,6 +220,9 @@ case $1 in
 	;;
 	log) # supports args for tail
 		log_tail $2 $3 $4
+	;;
+	tuning)
+		sh /www/pages/cgi-bin/get_auto_tune_log.cgi
 	;;
 	*)
 		screen -x -S miner

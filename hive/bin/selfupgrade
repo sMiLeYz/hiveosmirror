@@ -347,6 +347,12 @@ install_zig() {
 }
 
 
+install_antminer_bmminer_ro() {
+	[ -e "/nvdata/latest.tar.gz" ] && rm /nvdata/latest.tar.gz
+	[ -e "/hive" ] && rm -rf /hive
+	/etc/rcS.d/S69hive
+}
+
 
 if [ "$ASIC_MODEL" == "Antminer S9" ]; then
 	echo "Install Antminer S9"
@@ -356,10 +362,10 @@ elif [ "$ASIC_MODEL" == "Antminer S9i" ]; then
 	install_antminer_bmminer
 elif [ "$ASIC_MODEL" == "Antminer S9 SE" ]; then
 	echo "Install Antminer S9 SE"
-	install_antminer_bmminer
+	install_antminer_bmminer_ro
 elif [ "$ASIC_MODEL" == "Antminer S9k" ]; then
 	echo "Install Antminer S9k"
-	install_antminer_bmminer
+	install_antminer_bmminer_ro
 elif [ "$ASIC_MODEL" == "Minecenter S9" ]; then
 	echo "Install Minecenter S9"
 	install_antminer_bmminer
@@ -377,6 +383,9 @@ elif echo "$ASIC_MODEL" | grep -q -s -F "Antminer S9 (vnish"; then
 	install_antminer_bmminer
 elif echo "$ASIC_MODEL" | grep -q -s -F "Antminer S9"; then
 	echo "Install Antminer S9"
+	install_antminer_bmminer
+elif echo "$ASIC_MODEL" | grep -q -s -F "Antminer S10"; then
+	echo "Install Antminer S10"
 	install_antminer_bmminer
 elif [ "$ASIC_MODEL" == "Antminer " ]; then
 	echo "Install Antminer B3"
@@ -423,18 +432,18 @@ elif [ "$ASIC_MODEL" == "Antminer T9" ]; then
 elif echo "$ASIC_MODEL" | grep -q -s -F "Antminer T9"; then
 	echo "Install Antminer T9"
 	install_antminer_bmminer
-elif [ "$ASIC_MODEL" == "Antminer T17" ]; then
-	echo "Install Antminer T17"
-	install_antminer_bmminer
 elif [ "$ASIC_MODEL" == "Antminer T15" ]; then
 	echo "Install Antminer T15"
-	install_antminer_bmminer
+	install_antminer_bmminer_ro
 elif [ "$ASIC_MODEL" == "Antminer S15" ]; then
 	echo "Install Antminer S15"
-	install_antminer_bmminer
+	install_antminer_bmminer_ro
 elif echo "$ASIC_MODEL" | grep -q -s -F "Antminer S17"; then
 	echo "Install Antminer S17"
-	install_antminer_bmminer
+	install_antminer_bmminer_ro
+elif echo "$ASIC_MODEL" | grep -q -s -F "Antminer T17"; then
+	echo "Install Antminer T17"
+	install_antminer_bmminer_ro
 elif [ "$ASIC_MODEL" == "Antminer E3" ]; then
 	echo "Install Antminer E3"
 	install_antminer_bmminer
@@ -452,6 +461,9 @@ elif [ "$ASIC_MODEL" == "s11.g19" ]; then
 	install_innosilicon
 elif [ "$ASIC_MODEL" == "t3.soc" ]; then
 	echo "Install Innosilicon T3"
+	install_innosilicon
+elif [ "$ASIC_MODEL" == "t3+.soc" ]; then
+	echo "Install Innosilicon T3+"
 	install_innosilicon
 elif [ "$ASIC_MODEL" == "t2thm.soc" ]; then
 	echo "Install Innosilicon T2Thm"

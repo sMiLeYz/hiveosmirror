@@ -38,7 +38,7 @@ miner_stats () {
 	stats_raw=
 	max_fan_rpm=$MAX_FAN_RPM
 	case $ASIC_MODEL in
-		"Antminer S9"|"Antminer T9+"*|"Antminer S9i"|"Antminer E3"|"Antminer S9 Hydro"|"Antminer S9 (vnish"*|"Antminer S9"*|"Antminer "|"Antminer T9"*|"Antminer T17"|"Antminer S17"*|"Antminer T15"|"Antminer S15"|"Antminer S9j"|"Antminer S11"|"Minecenter S9")
+		"Antminer S9"|"Antminer T9+"*|"Antminer S9i"|"Antminer E3"|"Antminer S9 Hydro"|"Antminer S9 (vnish"*|"Antminer S9"*|"Antminer S10"*|"Antminer "|"Antminer T9"*|"Antminer T17"|"Antminer S17"*|"Antminer T15"|"Antminer S15"|"Antminer S9j"|"Antminer S11"|"Minecenter S9")
 			stats_raw=`echo '{"command":"stats"}' | timeout -t 7 nc localhost 4028 | tr -d '\0\n'`
 			if [[ $? -ne 0 || -z $stats_raw ]]; then
 				echo -e "${YELLOW}Failed to read $miner stats from localhost:4028${NOCOLOR}"
@@ -69,16 +69,27 @@ miner_stats () {
 
 				local hs=$( 	 (jq '.[1] | with_entries( select(.key | test("chain_rate\\d+")) ) 	| to_entries | [.[].value]') <<< "$STATS" )
 				local temp=$(	 (jq '.[1] | with_entries( select(.key | test("temp2_\\d+")) ) 		| to_entries | [.[].value]') <<< "$STATS")
+				local chip_temp=$((jq '.[1] | with_entries( select(.key | test("temp_chip\\d+")))| to_entries | [.[].value | split("-") | max]') <<< "$STATS")
 				local board_temp=$((jq '.[1] | with_entries( select(.key | test("temp\\d+$")) ) 	| to_entries | [.[].value]') <<< "$STATS")
 				local fan=$(	 (jq '.[1] | with_entries( select(.key | test("fan\\d+")) ) 		| to_entries | [.[].value / '$max_fan_rpm' * 100 ]') <<< "$STATS")
 				local fan_rpm=$( (jq '.[1] | with_entries( select(.key | test("fan\\d+")) ) 		| to_entries | [.[].value]') <<< "$STATS")
 				local freq=$(	 (jq '.[1] | with_entries( select(.key | test("freq_avg\\d+")) ) 	| to_entries | [.[].value]') <<< "$STATS")
+				local freq_new=$((jq '.[1] | with_entries( select(.key | test("freq\\d+")) ) 		| to_entries | [.[].value]') <<< "$STATS")
 				local acn=$(	 (jq '.[1] | with_entries( select(.key | test("chain_acn\\d+")) ) 	| to_entries | [.[].value]') <<< "$STATS")
 				local status=$(	 (jq '.[1] | with_entries( select(.key | test("chain_acs\\d+")) ) 	| to_entries | [.[].value]') <<< "$STATS")
 				local hw_errors=$((jq '.[1] | with_entries( select(.key | test("chain_hw\\d+")) ) 	| to_entries | [.[].value]') <<< "$STATS")
 				local power=$(	 (jq '.[1] | with_entries( select(.key | test("chain_power\\d+")) ) 	| to_entries | [.[].value]') <<< "$STATS")
 				local asicboost=$((jq '[.[1] | with_entries( select(.key | test("chain_power$")) ) | to_entries | .[].value | test("AB") | if . == true then 1 else 0 end ]') <<< "$STATS")
 				local ar=$(	 (jq -c --arg pool "$active_pool" '.[$pool|tonumber] | with_entries( select(.key | test("^Accepted","^Rejected","Get Failures")) ) | to_entries | [.[].value]') <<< "$stats_pool")
+
+				test_temp=$(echo $chip_temp | grep .[0-9])
+				if [[ ! -z $test_temp ]]; then
+					local temp=$chip_temp
+				fi
+				test_freq=$(echo $freq_new | grep .[0-9])
+				if [[ ! -z $test_freq ]]; then
+					local freq=$freq_new
+				fi
 
 				stats=$(jq -nc \
 						--arg algo "$algo" --argjson hs "$hs" --arg hs_units "$hs_units" \
@@ -150,7 +161,7 @@ miner_stats () {
 		"Zig Z1+"|"Zig Z1")
 			stats_raw=`echo '{"command":"stats"}' | timeout 7 nc localhost 4028 | tr -d '\0'`
 			if [[ $? -ne 0 || -z $stats_raw ]]; then
-				echo -e "${YELLOW}Failed to read $miner stats from localhost:4098${NOCOLOR}"
+				echo -e "${YELLOW}Failed to read $miner stats from localhost:4028${NOCOLOR}"
 			else
 				local STATS=$(jq '.STATS' <<< "$stats_raw")
 				local algo=$ASIC_ALGO
@@ -183,7 +194,7 @@ miner_stats () {
 						'{$algo, $hs, $hs_units, $temp, $fan, $fan_rpm, $freq, $acn, $status, $uptime}')
 			fi
 		;;
-		"b29+.g19"|"1337.PWNED"|"d9.g19"|"s11.g19"|"t3.soc"|"t3h+.soc"|"t2th+.soc"|"t2thf+.soc"|"t2thl+.soc"|"t2th.soc"|"t2tz.soc"|"t2thm.soc"|"t2thf.soc"|"t2t+.soc"|"t2ts.soc"|"t2ti.soc"|"t2t.soc")
+		"b29+.g19"|"1337.PWNED"|"d9.g19"|"s11.g19"|"t3.soc"|"t3+.soc"|"t3h+.soc"|"t2th+.soc"|"t2thf+.soc"|"t2thl+.soc"|"t2th.soc"|"t2tz.soc"|"t2thm.soc"|"t2thf.soc"|"t2t+.soc"|"t2ts.soc"|"t2ti.soc"|"t2t.soc")
 			stats_raw=`echo '{"command":"stats"}' | timeout -t 7 nc localhost 4028 | tr -d '\0'`
 			if [[ $? -ne 0 || -z $stats_raw ]]; then
 				echo -e "${YELLOW}Failed to read $miner stats from localhost:4028${NOCOLOR}"
@@ -346,7 +357,7 @@ loop () {
 	if [[ "$exitcode" -ne 0 || -z "$response" ]]; then
 		echo -e "${RED}Error sending stats${NOCOLOR} $HIVE_HOST_URL" && human-curl-error $exitcode
 		echo "[`date`] < ERROR SENDING STATS TO $HIVE_HOST_URL (curl code=$exitcode) \"$response\"" >> $LOG
-		/hive/bin/cache-hive-ip
+		/hive/bin/timeout -t 10 /hive/bin/cache-hive-ip
 		return $exitcode
 	fi
 

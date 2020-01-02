@@ -86,7 +86,7 @@ elif [[ $ASIC_MODEL == "Antminer S9 SE" ]]; then
 "bitmain-freq" : "O",
 "bitmain-voltage" : "950"
 }'
-elif [[ $ASIC_MODEL == "Antminer S9" || $ASIC_MODEL == "Antminer S9i" || $ASIC_MODEL == "Antminer S9 Hydro" || $ASIC_MODEL == "Antminer S9j" || $ASIC_MODEL =~ "Antminer S9" || $ASIC_MODEL == "Minecenter S9" ]]; then
+elif [[ $ASIC_MODEL == "Antminer S9" || $ASIC_MODEL == "Antminer S9i" || $ASIC_MODEL == "Antminer S9 Hydro" || $ASIC_MODEL == "Antminer S9j" || $ASIC_MODEL =~ "Antminer S9" || $ASIC_MODEL =~ "Antminer S10" || $ASIC_MODEL == "Minecenter S9" ]]; then
 	config_global='{
 "api-listen" : true,
 "api-network" : true,
@@ -389,7 +389,7 @@ elif [[ $ASIC_MODEL == "t3.soc" ]]; then
 "syslog" : true,
 "text-only" : true
 }'
-elif [[ "$ASIC_MODEL" == "t3h+.soc" || "$ASIC_MODEL" == "t2th+.soc" || "$ASIC_MODEL" == "t2thf+.soc" || "$ASIC_MODEL" == "t2thl+.soc" || "$ASIC_MODEL" == "t2th.soc" || "$ASIC_MODEL" == "t2tz.soc" || "$ASIC_MODEL" == "t2thm.soc" || "$ASIC_MODEL" == "t2thf.soc" || "$ASIC_MODEL" == "t2t+.soc" || "$ASIC_MODEL" == "t2ts.soc" || "$ASIC_MODEL" == "t2ti.soc" || "$ASIC_MODEL" == "t2t.soc" ]]; then
+elif [[ "$ASIC_MODEL" == "t3h+.soc" || "$ASIC_MODEL" == "t3+.soc" || "$ASIC_MODEL" == "t2th+.soc" || "$ASIC_MODEL" == "t2thf+.soc" || "$ASIC_MODEL" == "t2thl+.soc" || "$ASIC_MODEL" == "t2th.soc" || "$ASIC_MODEL" == "t2tz.soc" || "$ASIC_MODEL" == "t2thm.soc" || "$ASIC_MODEL" == "t2thf.soc" || "$ASIC_MODEL" == "t2t+.soc" || "$ASIC_MODEL" == "t2ts.soc" || "$ASIC_MODEL" == "t2ti.soc" || "$ASIC_MODEL" == "t2t.soc" ]]; then
 	config_global='{
 "api-listen" : true,
 "api-port" : "4028",
