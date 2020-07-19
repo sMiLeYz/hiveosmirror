@@ -211,7 +211,7 @@ elif [[ $ASIC_MODEL == "b29+.g19" ]]; then
 	CONFIG_PATH="/config/cgminer.conf"
 	HASH="hs"
 	MAX_FAN_RPM="6000"
-elif [[ $ASIC_MODEL == "1337.PWNED" ]]; then
+elif [[ $ASIC_MODEL == "b19+.g29" ]]; then
 	MOUNT=""
 	ASIC_ALGO="Equihash"
 	THIS_MINER_NAME="cgminer"

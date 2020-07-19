@@ -338,11 +338,28 @@ elif [[ $ASIC_MODEL == "Antminer DR3" ]]; then
 "bitmain-use-vil" : true,
 "bitmain-freq" : "410"
 }'
-elif [[ $ASIC_MODEL == "b29+.g19" || $ASIC_MODEL == "1337.PWNED" || $ASIC_MODEL == "d9.g19" || $ASIC_MODEL == "s11.g19" ]]; then
+elif [[ $ASIC_MODEL == "b29+.g19" || $ASIC_MODEL == "b19+.g29" || $ASIC_MODEL == "d9.g19" || $ASIC_MODEL == "s11.g19" ]]; then
 	config_global='{
 "api-listen": true,
 "api-port": "4028",
-"api-allow": "R:0/0,W:127.0.0.1"
+"api-allow": "R:0/0,W:127.0.0.1",
+"noauto" : true,
+"T1Pll1" : "1480",
+"T1Pll2" : "1480",
+"T1Pll3" : "1480",
+"T1Pll4" : "1480",
+"T1Pll5" : "1480",
+"T1Pll6" : "1480",
+"T1Pll7" : "1480",
+"T1Pll8" : "1480",
+"T1VID1" : "185",
+"T1VID2" : "185",
+"T1VID3" : "185",
+"T1VID4" : "185",
+"T1VID5" : "185",
+"T1VID6" : "185",
+"T1VID7" : "185",
+"T1VID8" : "185"
 }'
 elif [[ $ASIC_MODEL == "t3.soc" ]]; then
 	config_global='{

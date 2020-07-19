@@ -450,7 +450,7 @@ elif [ "$ASIC_MODEL" == "Antminer E3" ]; then
 elif [ "$ASIC_MODEL" == "b29+.g19" ]; then
 	echo "Install Innosilicon A9"
 	install_innosilicon
-elif [ "$ASIC_MODEL" == "1337.PWNED" ]; then
+elif [ "$ASIC_MODEL" == "b19+.g29" ]; then
 	echo "Install Innosilicon A9 PWNED"
 	install_innosilicon
 elif [ "$ASIC_MODEL" == "d9.g19" ]; then
