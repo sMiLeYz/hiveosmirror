@@ -63,7 +63,7 @@ function start() {
 		if [ -z "$test_miner" ] ; then
 			config-gen
 			screen -d > /dev/null
-			if [[ $ASIC_MODEL =~ ".g19" || $ASIC_MODEL == "1337.PWNED" || $ASIC_MODEL == "t3.soc" ]]; then
+			if [[ $ASIC_MODEL =~ ".g19" || $ASIC_MODEL =~ ".g17" || $ASIC_MODEL == "t3.soc" ]]; then
 				systemctl start cgminer.service
 			elif [[ "$ASIC_MODEL" == "t3h+.soc" || "$ASIC_MODEL" == "t3+.soc" || "$ASIC_MODEL" == "t2th+.soc" || "$ASIC_MODEL" == "t2thf+.soc" || "$ASIC_MODEL" == "t2thl+.soc" || "$ASIC_MODEL" == "t2th.soc" || "$ASIC_MODEL" == "t2tz.soc" || "$ASIC_MODEL" == "t2thm.soc" || "$ASIC_MODEL" == "t2thf.soc" || "$ASIC_MODEL" == "t2t+.soc" || "$ASIC_MODEL" == "t2ts.soc" || "$ASIC_MODEL" == "t2ti.soc" || "$ASIC_MODEL" == "t2t.soc" ]]; then
 				systemctl start cgminer.service
@@ -90,7 +90,7 @@ function stop() {
 	if [[ $HIVEON_VER == "1.02" ]]; then
 		echo "ok" > /tmp/norespawn
 	else
-		if [[ $ASIC_MODEL =~ ".g19" || $ASIC_MODEL == "1337.PWNED" || $ASIC_MODEL == "t3.soc" || "$ASIC_MODEL" == "t3h+.soc" || "$ASIC_MODEL" == "t3+.soc" || "$ASIC_MODEL" == "t2th+.soc" || "$ASIC_MODEL" == "t2thf+.soc" || "$ASIC_MODEL" == "t2thl+.soc" || "$ASIC_MODEL" == "t2th.soc" || "$ASIC_MODEL" == "t2tz.soc" || "$ASIC_MODEL" == "t2thm.soc" || "$ASIC_MODEL" == "t2thf.soc" || "$ASIC_MODEL" == "t2t+.soc" || "$ASIC_MODEL" == "t2ts.soc" || "$ASIC_MODEL" == "t2ti.soc" || "$ASIC_MODEL" == "t2t.soc" ]]; then
+		if [[ $ASIC_MODEL =~ ".g19" || $ASIC_MODEL =~ ".g17" || $ASIC_MODEL == "t3.soc" || "$ASIC_MODEL" == "t3h+.soc" || "$ASIC_MODEL" == "t3+.soc" || "$ASIC_MODEL" == "t2th+.soc" || "$ASIC_MODEL" == "t2thf+.soc" || "$ASIC_MODEL" == "t2thl+.soc" || "$ASIC_MODEL" == "t2th.soc" || "$ASIC_MODEL" == "t2tz.soc" || "$ASIC_MODEL" == "t2thm.soc" || "$ASIC_MODEL" == "t2thf.soc" || "$ASIC_MODEL" == "t2t+.soc" || "$ASIC_MODEL" == "t2ts.soc" || "$ASIC_MODEL" == "t2ti.soc" || "$ASIC_MODEL" == "t2t.soc" ]]; then
 			systemctl stop cgminer.service
 		elif [[ $ASIC_MODEL =~ "Zig Z1" ]]; then
 			pidof miner | xargs kill -9
@@ -137,7 +137,7 @@ function log_tail() {
 		sh /www/pages/cgi-bin/get_kernel_log.cgi | tail -n $TAIL_LINE
 	else
 		log_basename=`miner_log_basename $MINER`
-		if [[ $ASIC_MODEL =~ ".g19" || $ASIC_MODEL == "1337.PWNED" ]]; then
+		if [[ $ASIC_MODEL =~ ".g19" || $ASIC_MODEL =~ ".g17" ]]; then
 			journalctl -n $TAIL_LINE
 		else
 			if [[ $? > 0 ]]; then
